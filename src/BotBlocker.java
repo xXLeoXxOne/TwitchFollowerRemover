@@ -29,7 +29,6 @@ public class BotBlocker {
                 System.out.println("Authcode is valid!");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Invalid, please create a new Auth token: https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=z2ckhpdb422p47m4q3yrubk8xky6m6&redirect_uri=https://localhost/&scope=user_blocks_read+user_blocks_edit");
             Scanner sc = new Scanner(System.in);
             System.out.println("Please paste the URL you got after authorising or enter \"exit\" :");
