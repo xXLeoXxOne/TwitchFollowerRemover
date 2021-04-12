@@ -77,7 +77,6 @@ public class BotBlocker {
             public Threader(List<String> pL) {
                 l = pL;
             }
-
             @Override
             public void run() {
                 int i = 0;
@@ -92,20 +91,23 @@ public class BotBlocker {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    try {
-                        int id = getUserId(l.get(i), authcode, userclientid);
-                        if (id != 0) {
-                            blockbanUser(id, authcode, streamerid, finalSList.size());
-                        }
 
-                    } catch (Exception e) {
-                        System.out.println("Thread " + Thread.currentThread().getName() + " is waiting 10 seconds...");
+                    for(int failed = 0;failed<10;failed++){
                         try {
-                            Thread.sleep(10000);
-                        } catch (InterruptedException interruptedException) {
-                            interruptedException.printStackTrace();
+                            int id = getUserId(l.get(i), authcode, userclientid);
+                            if (id != 0) {
+                                blockbanUser(id, authcode, streamerid, finalSList.size());
+                            }
+
+                        } catch (Exception e) {
+                            System.out.println("Thread " + Thread.currentThread().getName() + " is waiting 10 seconds...");
+                            try {
+                                Thread.sleep(10000);
+                            } catch (InterruptedException interruptedException) {
+                                interruptedException.printStackTrace();
+                            }
+                            System.out.println("Thread " + Thread.currentThread().getName() + " is continuing and retrying previous operation.");
                         }
-                        System.out.println("Thread " + Thread.currentThread().getName() + " is continuing.");
                     }
                     i++;
                 }
@@ -160,7 +162,6 @@ public class BotBlocker {
     }
 
     public BotBlocker(int it) throws IOException {
-        count = it;
         File f = new File("./currentauthcode.txt");
         Path filePath = f.toPath();
         Charset charset = Charset.defaultCharset();
@@ -210,7 +211,7 @@ public class BotBlocker {
         HttpURLConnection con = (HttpURLConnection) new URL("https://api.twitch.tv/kraken/users/" + id2 + "/blocks/" + id).openConnection();
         con.setRequestMethod("PUT");
         con.setRequestProperty("Authorization", "OAuth " + token);
-        con.setRequestProperty("Client-id", "gp762nuuoqcoxypju8c569th9wz7q5");
+        con.setRequestProperty("Client-id", "z2ckhpdb422p47m4q3yrubk8xky6m6");
         con.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
         con.setDoOutput(true);
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
