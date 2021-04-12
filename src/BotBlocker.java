@@ -29,6 +29,7 @@ public class BotBlocker {
                 System.out.println("Authcode is valid!");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Invalid, please create a new Auth token: https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=z2ckhpdb422p47m4q3yrubk8xky6m6&redirect_uri=https://localhost/&scope=user_blocks_read+user_blocks_edit");
             Scanner sc = new Scanner(System.in);
             System.out.println("Please paste the URL you got after authorising or enter \"exit\" :");
@@ -83,8 +84,8 @@ public class BotBlocker {
                 int i = 0;
                 while (true) {
                     if (i >= l.size()) {
-                        System.out.println("-------------------------------------------------ENDED THREAD " + Thread.currentThread().getName() + "-------------------------------------------------");
-                        System.out.println("Blocking of that many accounts failed, might already be deleted: " + testRemaining(finalSList));
+                        //System.out.println("-------------------------------------------------ENDED THREAD " + Thread.currentThread().getName() + "-------------------------------------------------");
+                        //System.out.println("Blocking of that many accounts failed, might already be deleted: " + testRemaining(finalSList));
                         return;
                     }
                     try {
@@ -95,7 +96,7 @@ public class BotBlocker {
                     try {
                         int id = getUserId(l.get(i), authcode, userclientid);
                         if (id != 0) {
-                            blockbanUser(id, authcode, streamerid);
+                            blockbanUser(id, authcode, streamerid, finalSList.size());
                         }
 
                     } catch (Exception e) {
@@ -132,7 +133,7 @@ public class BotBlocker {
         con.setDoOutput(true);
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String s = in.readLine();
-        s = s.split(",")[5];
+        s = s.split(",")[4];
         s = s.split("\"")[3];
         return Integer.parseInt(s);
     }
@@ -201,11 +202,9 @@ public class BotBlocker {
         return erg.replace("\"", "");
     }
 
-    public void blockbanUser(int id, String token, int id2) throws IOException {
+    public void blockbanUser(int id, String token, int id2, int last) throws IOException {
         count++;
-        if ((count % 10) == 0) {
-            System.out.println(count);
-        }
+        loadingBar(count, last);
         if (id == 0) {
             return;
         }
@@ -216,7 +215,11 @@ public class BotBlocker {
         con.setRequestProperty("Accept", "application/vnd.twitchtv.v5+json");
         con.setDoOutput(true);
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        System.out.println(in.readLine());
+        //System.out.println(in.readLine());
+    }
+
+    public void loadingBar(int count, int last) {
+        System.out.print(count+"/"+last+"\r");
     }
 
     public int getUserId(String name, String token, String clientid) throws IOException {
