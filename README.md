@@ -12,4 +12,4 @@ This program written in Java can remove your unwanted Followers on Twitch!
 
 # Disclaimer
 As this is my first Twitch Tool it is not very professional. It does what it has to do but it might not be the fastest and has a few bugs. There are also some security flaws but as long as you delete the currentauthcode.txt after you stopped using it nothing should happen to you. This Tool is fully local so you dont need to worry about someone getting your tokens. You have to get the list of followers you want to remove on your own so its very safe because it can only remove followers you defined.
-I hope you have fun using the tool!
+I hope you like my tool!
