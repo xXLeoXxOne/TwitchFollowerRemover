@@ -2,7 +2,7 @@
 This program written in Java can remove your unwanted Followers on Twitch!
 
 # Tutorial
-1. Download [Botremover.jar](TwitchFollowerRemover/Botremover.jar)
+1. Download [Botremover.jar](https://github.com/xXLeoXxOne/TwitchFollowerRemover/raw/main/BotRemover.jar)
 2. Run the program with ```java -jar BotRemover.jar```
 3. Enter the starting point you want to start at in the bots.txt list
 4. Copy authentication URL to Browser, hit enter and copy the URL you got redirected to
